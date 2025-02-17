@@ -86,7 +86,7 @@ class ReportParametersPage(QWizardPage):
 
 
         second_y_label_input = QLineEdit()
-        second_y_label_input.setText('Pressure (Pa)')
+        second_y_label_input.setText('Pressure (bar)')
         second_y_label_input.textChanged.connect(lambda: self.set_button.setDisabled(False))
         settings_layout.addRow("Second Y-axis Label:", second_y_label_input)
 
