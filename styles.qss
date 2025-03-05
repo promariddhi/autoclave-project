@@ -1,0 +1,87 @@
+QWizard {
+    background-color: #2e3440;
+    color: #d8dee9;
+    border: 1px solid #4c566a;
+    border-radius: 10px;
+}
+
+QWizard::title {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    padding: 10px;
+}
+
+QWizard::subtitle {
+    font-size: 14px;
+    color: black;
+    padding: 5px 10px;
+}
+
+QWizard QPushButton {
+    background-color: #88c0d0;
+    color: #2e3440;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #81a1c1;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+QWizard QPushButton:hover {
+    background-color: #81a1c1;
+}
+
+QWizard QLineEdit {
+    background-color: #3b4252;
+    color: #d8dee9;
+    border: 1px solid #4c566a;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+QWizard QLabel {
+    font-size: 13px;
+    color: black;
+}
+
+QComboBox {
+    background-color: #3b4252;
+    color: #d8dee9;
+    border: 1px solid #4c566a;
+    border-radius: 5px;
+    padding: 5px;
+}
+QComboBox:hover {
+    border: 1px solid #88c0d0;
+}
+QComboBox QAbstractItemView {
+    background-color: #4c566a;
+    color: #d8dee9;
+    selection-background-color: #81a1c1;
+    selection-color: #2e3440;
+}
+
+QListWidget {
+    background-color: #3b4252;
+    color: #d8dee9;
+    border: 1px solid #4c566a;
+    border-radius: 5px;
+}
+QListWidget::item {
+    padding: 5px;
+}
+QListWidget::item:selected {
+    background-color: #81a1c1;
+    color: #2e3440;
+}
+QListWidget::item:hover {
+    background-color: #4c566a;
+}
+
+QPushButton:disabled {
+    background-color: lightgray;
+    color: gray;
+    border: 2px solid gray;
+}
+

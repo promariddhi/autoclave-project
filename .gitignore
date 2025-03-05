@@ -1,0 +1,14 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
+!main.py
+!shared.py
+!utilities.py
+!*.xlsx
+!*.md
+!*.qss
+!*.qrc
+!wizard_pages/
+!wizard_pages/**
+!*.gitignore
+!resources_rc.py
+

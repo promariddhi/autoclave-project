@@ -1,5 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QWizard
-import sys, pkg_resources
+import sys
+from PyQt5.QtCore import QFile, QTextStream
+import resources_rc  
+
 
 from wizard_pages.file_loader_page import FileLoadingPage
 from wizard_pages.data_page import DataPage
@@ -53,11 +56,12 @@ def main():
 
     wizard = Wizard()
 
-    stylesheet_path = pkg_resources.resource_filename(
-    __name__, 'styles.qss')
+    file = QFile(":/styles.qss")
+    if file.open(QFile.ReadOnly | QFile.Text):
+        stream = QTextStream(file)
+        stylesheet = stream.readAll()
+        app.setStyleSheet(stylesheet)
 
-    with open(stylesheet_path, 'r') as f:
-        app.setStyleSheet(f.read())
 
     wizard.exec_()
 

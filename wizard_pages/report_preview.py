@@ -51,7 +51,7 @@ class ReportPreview(QWizardPage):
 
     def generate_plot(self, curr_plot):
         plt.rcdefaults()
-        fig, self.ax = plt.subplots(figsize=(6, 4))
+        fig, self.ax = plt.subplots(figsize=(8, 6))
         tc_cols = [i for i in curr_plot.y_axis if re.search(r"^TC\d+", i) or i=='AIR TEMP.']
         other_cols = [i for i in curr_plot.y_axis if i not in tc_cols]
         if tc_cols and other_cols:
@@ -94,7 +94,7 @@ class ReportPreview(QWizardPage):
 
         for plot in plots:
             plot_base64 = self.generate_plot(plot)
-            plots_html += f'<img src="data:image/png;base64,{plot_base64}" alt="{plot.title}"><br>'
+            plots_html += f'<img src="data:image/png;base64,{plot_base64}" alt="{plot.title}" class="plots"><br>'
 
 
         html_rows = ""
@@ -113,20 +113,23 @@ class ReportPreview(QWizardPage):
                 border: 1px solid black;
                 border-collapse: collapse;
                 width : 100%;
+            }}
             th, td {{
                 padding: 15px;
             }}
+            .plots{{
+            width: 100%;
             }}
             </style>
         </head>
         <body>
+            <center>{plots_html}</center>
             <center>
                 <table><tbody>
                     {html_rows}
                     </tbody>
                 </table>
             </center>
-            <center>{plots_html}</center>
         </body>
         </html>
         """
@@ -160,6 +163,7 @@ class ReportPreview(QWizardPage):
                 printer = QPrinter(QPrinter.HighResolution)
                 printer.setOutputFormat(QPrinter.PdfFormat)
                 printer.setOutputFileName(save_path)
+                printer.setPageMargins(0,0,0,0,QPrinter.Millimeter)
                 
                 # Create a QTextDocument and set its HTML content
                 doc = QTextDocument()
