@@ -61,9 +61,11 @@ class Dataframe(QObject):
 class Data:
     def __init__(self):
         self.data = []
+        self.date = ''
         self.checked = [True, True, True, True, True, True]
     
-    def update_data(self, data, checked):
+    def update_data(self, data, checked, date):
         self.data = data
+        self.date = date
         self.checked = checked
 

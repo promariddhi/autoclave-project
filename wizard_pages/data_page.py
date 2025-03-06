@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (QWizardPage,
                              QCheckBox,
                              QLabel,)
 
-from utilities import modify_database, ramp_rates, avg_ramp_rate, ramp_rates_to_string, dwell_time, tc_time
+from utilities import modify_database, ramp_rates, avg_ramp_rate, ramp_rates_to_string, dwell_time, tc_time, getDate
 
 class DataPage(QWizardPage):
     def __init__(self, dataframe_obj, data_obj):
@@ -46,7 +46,7 @@ class DataPage(QWizardPage):
         card.setStyleSheet("""QFrame {
     background-color: lightblue;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
     margin: 10px;
 }""")
         card_layout = QVBoxLayout(card)
@@ -100,6 +100,6 @@ class DataPage(QWizardPage):
         for title_label, checkbox in self.checkboxes:
             data_indexes.append(self.data_labels[title_label])
             checked_indexes.append(checkbox.isChecked())
-        self.data.update_data(list(data_indexes), list(checked_indexes))
+        self.data.update_data(list(data_indexes), list(checked_indexes), getDate(self.dataframe))
 
         return True

@@ -46,9 +46,6 @@ class Wizard(QWizard):
     def nextId(self):
         if self.currentPage()==self.page2 and self.page2.no_plots_chosen():
             return 3
-        """
-        if self.currentPage() == self.page5:
-            self.page5.preview_html(self.plots.plot_list, self.data)"""
         return super().nextId()
 
 

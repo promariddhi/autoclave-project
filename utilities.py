@@ -54,24 +54,30 @@ def dwell_time(data):
     return times
 
 def tc_time(data):
-    df = data[data['segmentTypeName'] != 'Dwell']
-    cycles = df['Cycle_ID'].unique()
+    cycles = data['Cycle_ID'].unique()
     tc_cols = [i for i in data.columns if re.search(r"TC\d+", i)]
     diffs = ""
     heating_count = 0
     cooling_count = 0
+    dwell_count = 0
     for i in cycles:
-        filter = df[df['Cycle_ID']==i]
+        filter = data[data['Cycle_ID']==i]
         filter['max_difference'] = round(filter[tc_cols].max(axis=1) - filter[tc_cols].min(axis=1),2)
         cycle_type = filter.loc[filter["Cycle_ID"]==i, "segmentTypeName"].iloc[0]
         if cycle_type=='Heating':
             heating_count += 1
             count = heating_count
-        if cycle_type=='Cooling':
+        elif cycle_type=='Cooling':
             cooling_count += 1
             count = cooling_count
+        else:
+            dwell_count += 1
+            count = dwell_count
         diffs += str(cycle_type) + " "+ str(count) +": " + str(filter['max_difference'].max()) + '\u00B0C\n'
     return diffs
+
+def getDate(data):
+    return data['GENERAL_DATE'][0]
 
 
 

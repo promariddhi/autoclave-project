@@ -93,6 +93,8 @@ class PlotterPage(QWizardPage):
             for i in other_cols:
                 self.ax2.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i], label=i, linestyle = curr_plot.y2_linestyle)
             self.ax2.set_ylabel(curr_plot.second_y_label)
+            label = self.ax2.yaxis.get_label()
+            label.set_rotation(270)
 
             if curr_plot.legend:
                 handles, labels = self.ax.get_legend_handles_labels()

@@ -34,12 +34,9 @@ class ReportPreview(QWizardPage):
 
         layout.addWidget(self.web_view)
 
-        save_html_button = QPushButton("Save HTML")
-        save_html_button.clicked.connect(self.save_html)
         save_pdf_button = QPushButton("Save PDF")
         save_pdf_button.clicked.connect(self.save_pdf)
 
-        layout.addWidget(save_html_button)
         layout.addWidget(save_pdf_button)
 
         self.setLayout(layout)
@@ -66,6 +63,9 @@ class ReportPreview(QWizardPage):
             for i in other_cols:
                 self.ax2.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i], label=i, linestyle=curr_plot.y2_linestyle)
             self.ax2.set_ylabel(curr_plot.second_y_label)
+            label = self.ax2.yaxis.get_label()
+            label.set_rotation(270)
+
             if curr_plot.legend:
                 handles, labels = self.ax.get_legend_handles_labels()
                 handles2, labels2 = self.ax2.get_legend_handles_labels()
@@ -118,20 +118,29 @@ class ReportPreview(QWizardPage):
         <head>
             <title>Preview</title>
             <style>
-            table, th, td {{
+                        table, th, td {{
                 border: 1px solid black;
                 border-collapse: collapse;
                 width : 100%;
             }}
             th, td {{
-                padding: 15px;
+                padding: 10px;
             }}
             .plots{{
             width: 100%;
             }}
+            p {{
+                    text-align: left;
+                    color: gray;
+                    padding: 10px;
+                }}
             </style>
         </head>
         <body>
+            <p>
+                Generated on {self.data.date}
+            </p>
+            <center><h1>Autoclave Cure Analysis Report</h1></center>
             <center>{plots_html}</center>
             <center>
                 <table><tbody>
@@ -153,16 +162,6 @@ class ReportPreview(QWizardPage):
         checked_data = [i for _, i in enumerate(self.data.data) if self.data.checked[_]]
         self.generated_html_content = self.generate_html(self.plots, checked_data)
         self.web_view.setHtml(self.generated_html_content)
-
-    def save_html(self):
-        save_path,_ = QFileDialog.getSaveFileName(self, "Save HTML File", "", "HTML Files (*.html)")
-        if save_path:
-            try:
-                with open(save_path, "w") as file:
-                    file.write(self.generated_html_content)
-                QMessageBox.information(self, "Success", f"File saved as HTML: {save_path}")
-            except Exception as e:
-                QMessageBox.critical(self, "Error", f"Could not save HTML: {str(e)}")
 
     def save_pdf(self):
         save_path,_ = QFileDialog.getSaveFileName(self, "Save PDF File", "", "PDF Files (*.pdf)")
