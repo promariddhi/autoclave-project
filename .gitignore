@@ -8,7 +8,10 @@
 !*.qss
 !*.qrc
 !wizard_pages/
-!wizard_pages/**
+!wizard_pages/data_page.py
+!wizard_pages/file_loader_page.py
+!wizard_pages/plotter_page.py
+!wizard_pages/report_parameters_page.py
+!wizard_pages/report_preview.py
 !*.gitignore
 !resources_rc.py
-

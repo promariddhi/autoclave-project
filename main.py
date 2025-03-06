@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QWizard
 import sys
-from PyQt5.QtCore import QFile, QTextStream
+from PyQt5.QtCore import Qt, QFile, QTextStream
 import resources_rc  
 
 
@@ -28,6 +28,8 @@ class Wizard(QWizard):
         self.setWindowTitle("Autoclave Data Analyser")
         self.setGeometry((screen_width - window_width) // 2, (screen_height - window_height) // 2, window_width, window_height)
         self.setWizardStyle(QWizard.ModernStyle)
+
+        self.setWindowFlags(Qt.Window | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)
 
         self.page1 = FileLoadingPage(self.dataframe)
         self.page2 = ReportParametersPage(self.dataframe, self.plots)

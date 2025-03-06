@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 
+from matplotlib.ticker import MultipleLocator
+
 import re
 
 class ReportPreview(QWizardPage):
@@ -60,9 +62,9 @@ class ReportPreview(QWizardPage):
                 self.ax2 = None
             self.ax2 = self.ax.twinx()
             for i in tc_cols:
-              self.ax.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i] , label=i)
+              self.ax.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i] , label=i, linestyle=curr_plot.y1_linestyle)
             for i in other_cols:
-                self.ax2.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i], label=i, linestyle='-.')
+                self.ax2.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i], label=i, linestyle=curr_plot.y2_linestyle)
             self.ax2.set_ylabel(curr_plot.second_y_label)
             if curr_plot.legend:
                 handles, labels = self.ax.get_legend_handles_labels()
@@ -76,9 +78,16 @@ class ReportPreview(QWizardPage):
               self.ax.plot(curr_plot.dataframe[curr_plot.x_axis], curr_plot.dataframe[i] , label=i)
             if curr_plot.legend:
                 self.ax.legend(loc='upper center', ncol=6, bbox_to_anchor=(0.5, -0.15))
+        y_min, y_max = self.ax.get_ylim()
+        if curr_plot.grid:
+            self.ax.grid(True, which='major', linestyle='-', linewidth=0.75, axis='y')
         self.ax.set_title(curr_plot.title)
         self.ax.set_xlabel(curr_plot.x_label)
         self.ax.set_ylabel(curr_plot.y_label)
+        self.ax.yaxis.set_major_locator(MultipleLocator(10))
+        self.ax.yaxis.set_minor_locator(MultipleLocator(5))
+        self.ax.xaxis.set_major_locator(MultipleLocator(50))
+        self.ax.xaxis.set_minor_locator(MultipleLocator(10))
         buffer = BytesIO()
         plt.savefig(buffer, format="png", bbox_inches="tight")
         buffer.seek(0)

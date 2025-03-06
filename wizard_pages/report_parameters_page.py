@@ -73,28 +73,50 @@ class ReportParametersPage(QWizardPage):
 
         # X-axis label
         x_label_input = QLineEdit()
-        x_label_input.setText('Cycle time, min')
+        x_label_input.setText('Cycle time (min)')
         x_label_input.textChanged.connect(lambda: self.set_button.setDisabled(False))
 
         settings_layout.addRow("X-axis Label:", x_label_input)
 
+        linestyles = ["Solid", "Dotted", "Dashed", "Dash Dot"]
         # Y-axis label
         y_label_input = QLineEdit()
         y_label_input.setText(u'Temp (\u00B0C)')
         settings_layout.addRow("Y-axis Label:", y_label_input)
         y_label_input.textChanged.connect(lambda: self.set_button.setDisabled(False))
 
+        #Y-axis linestyle
+        y1_linestyle_dropdown = QComboBox()
+        y1_linestyle_dropdown.addItems(linestyles)
+        y1_linestyle_dropdown.setCurrentIndex(0)
+        y1_linestyle_dropdown.currentIndexChanged.connect(lambda: self.set_button.setDisabled(False))
+        settings_layout.addRow("Style:", y1_linestyle_dropdown)
 
+        # Second Y-axis label
         second_y_label_input = QLineEdit()
         second_y_label_input.setText('Pressure (bar)')
         second_y_label_input.textChanged.connect(lambda: self.set_button.setDisabled(False))
         settings_layout.addRow("Second Y-axis Label:", second_y_label_input)
+
+        #Y-axis linestyle
+        y2_linestyle_dropdown = QComboBox()
+        y2_linestyle_dropdown.addItems(linestyles)
+        y2_linestyle_dropdown.setCurrentIndex(2)
+        y2_linestyle_dropdown.currentIndexChanged.connect(lambda: self.set_button.setDisabled(False))
+        settings_layout.addRow("Style:", y2_linestyle_dropdown)
 
         # Show legend checkbox
         show_legend_checkbox = QCheckBox("Show Legend")
         show_legend_checkbox.setChecked(True)
         show_legend_checkbox.stateChanged.connect(lambda: self.set_button.setDisabled(False))
         settings_layout.addRow(show_legend_checkbox)
+
+        #Show gridlines checkbox
+        show_gridlines_checkbox = QCheckBox("Show Grid")
+        show_gridlines_checkbox.setChecked(True)
+        show_gridlines_checkbox.stateChanged.connect(lambda: self.set_button.setDisabled(False))
+        settings_layout.addRow(show_gridlines_checkbox)
+        
 
         # X-axis column (single selection)
         x_axis_dropdown = QComboBox()
@@ -113,7 +135,18 @@ class ReportParametersPage(QWizardPage):
         settings_layout.addRow("Y-axis Columns:", self.y_axis_list)
         self.selected_items = [item.text() for item in self.y_axis_list.selectedItems()]
         self.set_button.clicked.connect(self.set_selected_items)
-        self.set_button.clicked.connect(lambda: plot_object.update_data(graph_title,x_label_input.text().strip(), y_label_input.text().strip(), second_y_label_input.text().strip(), show_legend_checkbox.isChecked(), x_axis_dropdown.currentText(), self.selected_items, dataframe.dataframe))
+        self.set_button.clicked.connect(lambda: plot_object.update_data(graph_title,
+                                                                        x_label_input.text().strip(), 
+                                                                        y_label_input.text().strip(), 
+                                                                        y1_linestyle_dropdown.currentText(), 
+                                                                        second_y_label_input.text().strip(), 
+                                                                        y2_linestyle_dropdown.currentText(), 
+                                                                        show_legend_checkbox.isChecked(), 
+                                                                        show_gridlines_checkbox.isChecked(),
+                                                                        x_axis_dropdown.currentText(), 
+                                                                        self.selected_items, 
+                                                                        dataframe.dataframe))
+        
         self.set_button.clicked.connect(lambda: self.set_button.setDisabled(True))
         self.plots[self.count] = plot_object
         # Add the settings layout to the group box

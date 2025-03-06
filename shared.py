@@ -5,18 +5,31 @@ class Plotting:
         self.title = ""
         self.x_label = ""
         self.y_label = ""
+        self.y1_linestyle = ""
         self.second_y_label = ""
+        self.y2_linestyle = ""
         self.legend = True
+        self.grid = True
         self.x_axis = ""
         self.y_axis = []
         self.dataframe = None
 
-    def update_data(self, title, x_label, y_label, second_y_label, legend, x_col, y_cols, dataframe):
+        self.linestyles = {
+            "Solid" : '-',
+            "Dotted": ':',
+            "Dashed": '--',
+            "Dash Dot": '-.'
+        }
+
+    def update_data(self, title, x_label, y_label, y1_linestyle, second_y_label, y2_linestyle, legend, grid, x_col, y_cols, dataframe):
         self.title = title
         self.x_label = x_label
         self.y_label = y_label
+        self.y1_linestyle = self.linestyles[y1_linestyle]
         self.second_y_label = second_y_label
+        self.y2_linestyle = self.linestyles[y2_linestyle]
         self.legend = legend
+        self.grid = grid
         self.x_axis = x_col
         self.y_axis = y_cols
         self.dataframe = dataframe
